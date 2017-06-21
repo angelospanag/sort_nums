@@ -17,3 +17,8 @@ run: build
 
 test: imports
 	@go test -timeout=5s -cover -race $(TESTTARGET)
+
+clean:
+	@rm sort_nums &> /dev/null || true
+	@rm sorted_output.txt &> /dev/null || true
+	@rm tmp_* &> /dev/null || true
