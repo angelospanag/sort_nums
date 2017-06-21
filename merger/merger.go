@@ -5,6 +5,7 @@ import (
 	"container/heap"
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 
 	"github.com/angelospanag/sort_nums/datastructs"
@@ -35,9 +36,7 @@ func MergeRuns(chunksNum int) error {
 			return err
 		}
 
-		r := bufio.NewReader(f)
-
-		nextInt, err := fileoperations.ReadNextNumFromCSVFile(r)
+		nextInt, err := fileoperations.ReadNextNumFromCSVFile(f)
 		if err != nil {
 		}
 		//TODO
@@ -45,8 +44,8 @@ func MergeRuns(chunksNum int) error {
 
 		// Fill the priority queue with the first set of integers from our
 		// temporary files
-		queueItem := make(map[*bufio.Reader]int)
-		queueItem[r] = nextInt
+		queueItem := make(map[*os.File]int)
+		queueItem[f] = nextInt
 
 		pq[fileCounter] = &datastructs.Item{
 			Value:    queueItem,
@@ -75,7 +74,7 @@ func MergeRuns(chunksNum int) error {
 			// End of file?
 			if err != nil {
 			} else { // ...if there is still more, just push it in the queue
-				queueItem := make(map[*bufio.Reader]int)
+				queueItem := make(map[*os.File]int)
 				queueItem[reader] = i
 				item := &datastructs.Item{Value: queueItem, Priority: i}
 				heap.Push(&pq, item)

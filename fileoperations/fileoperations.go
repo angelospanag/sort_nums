@@ -1,7 +1,6 @@
 package fileoperations
 
 import (
-	"bufio"
 	"os"
 	"strconv"
 
@@ -40,7 +39,7 @@ func WriteBufferToFile(ints []int, file *os.File) error {
 }
 
 // ReadNextNumFromCSVFile parses a CSV file using its already open reader and returns the next integer
-func ReadNextNumFromCSVFile(r *bufio.Reader) (int, error) {
+func ReadNextNumFromCSVFile(f *os.File) (int, error) {
 
 	numberToken := []byte{}
 	var numberTokenAsInt int
@@ -48,7 +47,7 @@ func ReadNextNumFromCSVFile(r *bufio.Reader) (int, error) {
 	for {
 		fileByte := make([]byte, 1)
 
-		_, err := r.Read(fileByte)
+		_, err := f.Read(fileByte)
 
 		// if err == io.EOF {
 		// 	return numberTokenAsInt, nil

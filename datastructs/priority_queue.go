@@ -10,14 +10,14 @@
 package datastructs
 
 import (
-	"bufio"
 	"container/heap"
+	"os"
 )
 
 // Item is a 'node' in the priority queue
 type Item struct {
-	Value    map[*bufio.Reader]int // The value of the item; arbitrary.
-	Priority int                   // The priority of the item in the queue.
+	Value    map[*os.File]int // The value of the item; arbitrary.
+	Priority int              // The priority of the item in the queue.
 	// The index is needed by update and is maintained by the heap.Interface methods.
 	Index int // The index of the item in the heap.
 }
@@ -59,7 +59,7 @@ func (pq *PriorityQueue) Pop() interface{} {
 }
 
 // update modifies the priority and value of an Item in the queue.
-func (pq *PriorityQueue) update(item *Item, value map[*bufio.Reader]int, priority int) {
+func (pq *PriorityQueue) update(item *Item, value map[*os.File]int, priority int) {
 	item.Value = value
 	item.Priority = priority
 	heap.Fix(pq, item.Index)
