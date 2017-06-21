@@ -59,6 +59,7 @@ func MergeRuns(chunksNum int) error {
 
 			if err == io.EOF {
 				log.Println(err)
+				log.Println(i)
 			} else {
 				queueItem := make(map[*bufio.Reader]int)
 				queueItem[reader] = i
