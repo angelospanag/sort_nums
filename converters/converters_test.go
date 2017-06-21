@@ -17,7 +17,7 @@ var intSliceToCSVStringTests = []struct {
 
 func TestIntSliceToCSVString(t *testing.T) {
 	for _, tt := range intSliceToCSVStringTests {
-		actual := converters.IntSliceToCSVString(tt.n)
+		actual, _ := converters.IntSliceToCSVString(tt.n)
 
 		if actual != tt.expected {
 			t.Errorf("IntSliceToCSVString(%d): expected %d, actual %d", tt.n, tt.expected, actual)

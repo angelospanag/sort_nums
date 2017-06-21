@@ -6,7 +6,7 @@ import (
 )
 
 // IntSliceToCSVString converts a slice of integers to a 'comma separated values' string
-func IntSliceToCSVString(ints []int) string {
+func IntSliceToCSVString(ints []int) (string, error) {
 
 	b := make([]string, len(ints))
 	for i, v := range ints {
@@ -15,7 +15,7 @@ func IntSliceToCSVString(ints []int) string {
 
 	result := strings.Join(b, ",")
 
-	return result
+	return result, nil
 }
 
 // CSVStringToIntSlice converts a 'comma separated values' string to a slice of integers

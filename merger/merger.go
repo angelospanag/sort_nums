@@ -3,7 +3,7 @@ package merger
 import (
 	"bufio"
 	"container/heap"
-	"io"
+	"fmt"
 	"log"
 	"strconv"
 
@@ -39,8 +39,9 @@ func MergeRuns(chunksNum int) error {
 
 		nextInt, err := fileoperations.ReadNextNumFromCSVFile(r)
 		if err != nil {
-			return err
 		}
+		//TODO
+		fmt.Println(nextInt)
 
 		// Fill the priority queue with the first set of integers from our
 		// temporary files
@@ -72,9 +73,7 @@ func MergeRuns(chunksNum int) error {
 
 			i, err := fileoperations.ReadNextNumFromCSVFile(reader)
 			// End of file?
-			if err == io.EOF {
-				log.Println(err)
-				log.Println(i)
+			if err != nil {
 			} else { // ...if there is still more, just push it in the queue
 				queueItem := make(map[*bufio.Reader]int)
 				queueItem[reader] = i

@@ -27,9 +27,13 @@ func OpenFile(filePath *string) (*os.File, error) {
 	return inputFile, nil
 }
 
+// WriteBufferToFile writes a slice of integers to a specified file in CSV format
 func WriteBufferToFile(ints []int, file *os.File) error {
 
-	b := converters.IntSliceToCSVString(ints)
+	b, err := converters.IntSliceToCSVString(ints)
+	if err != nil {
+		return err
+	}
 	file.WriteString(b)
 
 	return nil
