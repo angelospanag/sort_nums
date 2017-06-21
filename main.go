@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"log"
-	"math"
 
 	"github.com/angelospanag/sort_nums/fileoperations"
 	"github.com/angelospanag/sort_nums/merger"
@@ -32,26 +31,26 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var chunksAsFloat float64 = float64(fi.Size()) / float64(*memoryPtr)
-	chunksNum := int64(math.Ceil(chunksAsFloat))
-
-	log.Printf("File %s is %d bytes, will be split to %d chunks\n", *filePtr, fi.Size(), chunksNum)
+	//var chunksAsFloat float64 = float64(fi.Size()) / float64(*memoryPtr)
+	//proposedChunks := int64(math.Ceil(chunksAsFloat))
 
 	// Split file to chunks and store them in disk
-	err = splitter.SplitFileToChunks(inputFile, *memoryPtr)
+	calculatedChunkNum, err := splitter.SplitFileToChunks(inputFile, *memoryPtr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	log.Printf("File %s is %d bytes, will be split to %d chunks\n", *filePtr, fi.Size(), calculatedChunkNum)
+
 	// Merge chunks stored in memory in one output file
-	err = merger.MergeRuns(int(chunksNum))
+	err = merger.MergeRuns(int(calculatedChunkNum))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Remove temporary files from previous runs
-	err = fileoperations.CleanupTempFiles(int(chunksNum))
-	if err != nil {
-		log.Fatal(err)
-	}
+	// err = fileoperations.CleanupTempFiles(int(calculatedChunkNum))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }
