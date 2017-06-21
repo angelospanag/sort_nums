@@ -21,18 +21,17 @@ func main() {
 		log.Fatal("Not valid memory value")
 	}
 
+	// Open the input file that we want to sort
 	inputFile, err := fileoperations.OpenFile(filePtr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Get the size of the examined file
 	fi, err := inputFile.Stat()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	//var chunksAsFloat float64 = float64(fi.Size()) / float64(*memoryPtr)
-	//proposedChunks := int64(math.Ceil(chunksAsFloat))
 
 	// Split file to chunks and store them in disk
 	calculatedChunkNum, err := splitter.SplitFileToChunks(inputFile, *memoryPtr)
@@ -49,8 +48,8 @@ func main() {
 	}
 
 	// Remove temporary files from previous runs
-	// err = fileoperations.CleanupTempFiles(int(calculatedChunkNum))
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	err = fileoperations.CleanupTempFiles(int(calculatedChunkNum))
+	if err != nil {
+		log.Fatal(err)
+	}
 }
