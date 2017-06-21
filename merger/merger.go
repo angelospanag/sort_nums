@@ -11,6 +11,7 @@ import (
 	"github.com/angelospanag/sort_nums/fileoperations"
 )
 
+// MergeRuns
 func MergeRuns(chunksNum int) error {
 	log.Printf("Trying to merge runs of %d chunks\n", chunksNum)
 	pq := make(datastructs.PriorityQueue, chunksNum)

@@ -10,6 +10,7 @@ build: imports
 	@go build
 
 doc:
+	@echo 'Visit http://localhost:8080/pkg/github.com/angelospanag/sort_nums/ on your browser :)'
 	@godoc -http=:8080 -index
 
 run: build

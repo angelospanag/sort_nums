@@ -1,4 +1,12 @@
-// This example demonstrates a priority queue built using the heap interface.
+// Package datastructs defines a reference implementation of
+// a priority queue as shown on the official
+// documentation of Go but modified to suit our purposes
+//
+// https://golang.org/pkg/container/heap/#example__priorityQueue
+//
+// The only difference is that the value of each item in the queue is a map
+// of file readers to a returned integer. This will help us keep track from
+// which file we should read next
 package datastructs
 
 import (
@@ -6,7 +14,7 @@ import (
 	"container/heap"
 )
 
-// An Item is something we manage in a priority queue.
+// Item is a 'node' in the priority queue
 type Item struct {
 	Value    map[*bufio.Reader]int // The value of the item; arbitrary.
 	Priority int                   // The priority of the item in the queue.
@@ -17,18 +25,22 @@ type Item struct {
 // A PriorityQueue implements heap.Interface and holds Items.
 type PriorityQueue []*Item
 
+// Len gives the length of the queue
 func (pq PriorityQueue) Len() int { return len(pq) }
 
+// Less makes a comparison of two elements in the queue
 func (pq PriorityQueue) Less(i, j int) bool {
-	// We want Pop to give us the highest, not lowest, priority so we use greater than here.
 	return pq[i].Priority < pq[j].Priority
 }
+
+// Swap swaps two elements of a priority queue
 func (pq PriorityQueue) Swap(i, j int) {
 	pq[i], pq[j] = pq[j], pq[i]
 	pq[i].Index = i
 	pq[j].Index = j
 }
 
+// Push adds an item in the priority queue
 func (pq *PriorityQueue) Push(x interface{}) {
 	n := len(*pq)
 	item := x.(*Item)
@@ -36,11 +48,12 @@ func (pq *PriorityQueue) Push(x interface{}) {
 	*pq = append(*pq, item)
 }
 
+// Pop removes an item from the priority queue
 func (pq *PriorityQueue) Pop() interface{} {
 	old := *pq
 	n := len(old)
 	item := old[n-1]
-	item.Index = -1 // for safety
+	item.Index = -1
 	*pq = old[0 : n-1]
 	return item
 }
