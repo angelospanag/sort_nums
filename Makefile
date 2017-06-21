@@ -10,8 +10,8 @@ build: imports
 	@go build
 
 doc:
-	@echo 'Visit http://localhost:8080/pkg/github.com/angelospanag/sort_nums/ on your browser :)'
-	@godoc -http=:8080 -index
+	@echo 'Visit http://localhost:6060/pkg/github.com/angelospanag/sort_nums/ on your browser :)'
+	@godoc -http=:6060 -index
 
 run: build
 	@./$(APPBIN)
