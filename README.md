@@ -32,7 +32,7 @@ External merge sorting with Direct K-way merge. A simplified description of it:
 The following software must be installed on your environment to run this project.
 
 ### Go
-Your environment must be configured with the Go version 1.8.*
+Your environment must be configured with Go version 1.8.*
 
 https://golang.org/
 
@@ -101,6 +101,8 @@ The fastest way to run the project without performing any compilation is to issu
 ## Resources Used
 
 This section describes the resources used in the development of this project.
+
+* [Go 1.8.3](https://golang.org/)
 
 * [Atom 1.18](https://atom.io/)
 
