@@ -48,7 +48,7 @@ func main() {
 	}
 
 	// Remove temporary files from previous runs
-	//err = fileoperations.CleanupTempFiles(int(calculatedChunkNum))
+	err = fileoperations.CleanupTempFiles(int(calculatedChunkNum))
 	if err != nil {
 		log.Fatal(err)
 	}
