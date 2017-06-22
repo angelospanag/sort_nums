@@ -1,6 +1,7 @@
 package fileoperations
 
 import (
+	"io"
 	"os"
 	"strconv"
 
@@ -49,12 +50,16 @@ func ReadNextNumFromCSVFile(f *os.File) (int, error) {
 
 		_, err := f.Read(fileByte)
 
-		// if err == io.EOF {
-		// 	return numberTokenAsInt, nil
-		// }
+		if err == io.EOF && len(numberToken) > 0 {
+			lastNumberTokenAsString := string(numberToken)
+			lastNumberTokenAsInt, errConv := strconv.Atoi(lastNumberTokenAsString)
+			if errConv != nil {
+				return -1, err
+			}
+			return lastNumberTokenAsInt, nil
 
-		if err != nil {
-			return 0, err
+		} else if err != nil {
+			return -1, err
 		}
 
 		if string(fileByte[0]) != "," {
@@ -67,17 +72,6 @@ func ReadNextNumFromCSVFile(f *os.File) (int, error) {
 			}
 			break
 		}
-
-		// if string(token[0]) != "," {
-		// 	numberToken = append(numberToken, token[0])
-		// } else {
-		// 	numberTokenAsString := string(numberToken)
-		// 	numberTokenAsInt, err = strconv.Atoi(numberTokenAsString)
-		// 	if err != nil {
-		// 		return 0, err
-		// 	}
-		// 	break
-		// }
 	}
 
 	return numberTokenAsInt, nil
