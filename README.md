@@ -104,7 +104,7 @@ This section describes the resources used in the development of this project.
 
 * [Go 1.8.3](https://golang.org/)
 
-* [Atom 1.18](https://atom.io/)
+* [Atom 1.18](https://atom.io/) with a [series of preferred packages](https://github.com/angelospanag/atom_packages)
 
 * [go-plus for Atom](https://atom.io/packages/go-plus)
 
