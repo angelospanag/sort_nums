@@ -55,15 +55,23 @@ func MergeRuns(chunksNum int) error {
 	// Initialise the priority queue
 	heap.Init(&pq)
 
+	isFirstRun := true
+
 	// Main looping logic
 	// As long as our queue is not empty, keep taking out the smallest elements
 	// in it and write it to the final output file
 	for pq.Len() > 0 {
 		output := heap.Pop(&pq).(*datastructs.Item)
 
+		// Let's be proper, don't let any spare commas at the end or beginning
+		// of the output file
+		if !isFirstRun {
+			outputFileWriter.WriteString(",")
+		}
+		isFirstRun = false
+
 		// Write the smallest element to the output file
 		outputFileWriter.WriteString(strconv.Itoa(output.Priority))
-		outputFileWriter.WriteString(",")
 
 		// Next element from the file...
 		for reader := range output.Value {

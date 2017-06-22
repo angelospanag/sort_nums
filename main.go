@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"log"
+	"time"
 
 	"github.com/angelospanag/sort_nums/fileoperations"
 	"github.com/angelospanag/sort_nums/merger"
 	"github.com/angelospanag/sort_nums/splitter"
+	"github.com/angelospanag/sort_nums/timers"
 )
 
 func main() {
@@ -21,6 +23,7 @@ func main() {
 		log.Fatal("Not valid memory value")
 	}
 
+	defer timers.TimeTrack(time.Now(), "Sorting")
 	// Open the input file that we want to sort
 	inputFile, err := fileoperations.OpenFile(filePtr)
 	if err != nil {

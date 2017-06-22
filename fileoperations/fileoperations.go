@@ -8,6 +8,7 @@ import (
 	"github.com/angelospanag/sort_nums/converters"
 )
 
+//CreateFile creates a file given a path in the local filesystem
 func CreateFile(filename string) (*os.File, error) {
 	f, err := os.Create(filename)
 
@@ -50,6 +51,9 @@ func ReadNextNumFromCSVFile(f *os.File) (int, error) {
 
 		_, err := f.Read(fileByte)
 
+		// IMPORTANT! Corner case: when we have reached EOF from a previous run
+		// we still have leftover buffer to return.
+		// Check if that's the case and return it
 		if err == io.EOF && len(numberToken) > 0 {
 			lastNumberTokenAsString := string(numberToken)
 			lastNumberTokenAsInt, errConv := strconv.Atoi(lastNumberTokenAsString)
@@ -62,9 +66,10 @@ func ReadNextNumFromCSVFile(f *os.File) (int, error) {
 			return -1, err
 		}
 
+		// If a read character is NOT a comma, we still have numbers to append
 		if string(fileByte[0]) != "," {
 			numberToken = append(numberToken, fileByte[0])
-		} else {
+		} else { //...we found a comma, we have a complete number to return
 			numberTokenAsString := string(numberToken)
 			numberTokenAsInt, err = strconv.Atoi(numberTokenAsString)
 			if err != nil {
